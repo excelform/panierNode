@@ -1,28 +1,12 @@
 <html>
     <head>
-        <title>Carnet d'adresses</title>
+        <title>gestion du panier</title>
     </head>
     <body>
-        <h1>Carnet d'adresses</h1>
-		<h2>liste des utilisateurs</h2>
-		<table>
-			<thead>
-				<tr>
-				  <th>nom</th>
-				  <th>prenom</th>
-				</tr>
-			</thead>
-			<tbody>
-				<%
-					for(var i = 0 ; i < nbre ; i++) {
-				%>
-					<tr>
-					  <td><%= liste[i].nom %></td>
-					  <td><%= liste[i].prenom %></td>
-					</tr>
-				<% } %>
-			</tbody>
-		</table>
+        <h1>gestion du panier</h1>
+		<h2>bonjour <%= client.prenom %>  <%= client.nom %></h2> 
+		votre email : <%= client.email%>
+
 		<form id="form1" action="/ajouter" method="post">
 			<h2>Ajouter un utilisateur</h2>
 			<p><label> Nom: </label>

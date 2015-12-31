@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 // initialisation de mongoose
 mongoose.connect('mongodb://localhost/caddy', function(err) {
-  if (err) { throw err; }
+  if (err) throw err;
 });
 
 
@@ -30,33 +30,37 @@ var clientModel = mongoose.model('clients', clientSchema);
 var monClient = new clientModel({ nom : 'rambo', prenom : 'john', email : 'john.rambo@boom.com', password : '123456' });
 
 monClient.save(function (err) {
-  if (err) { throw err; }
-  console.log('client ajouté avec succès !');
-  
+  if (err) throw err;
+  console.log('client ajouté avec succès !'); 
 });
 
 var clients;
 
-clientModel.find({nom: 'autran'}, function (err, comms) {
-  if (err) 
-  { 
-	console.log(err);
-  }
-clients = comms;
-  var comm;
-  for (var i = 0; i < comms.length; i++) {
-    comm = comms[i];
-    console.log('------------------------------');
-    console.log('Nom : ' + comm.nom);
-    console.log('Prenom : ' + comm.prenom);
-    console.log('------------------------------');
+clientModel.find({}, function (err, liste) 
+{
+	if (err)  console.log(err);
+	clients = liste;
 	mongoose.connection.close();
-  }
 });
-
+var checkLogin = function(login, mdp)
+{
+	for (var i = 0; i < clients.length; i++) 
+	{
+    if (clients[i].email == login && clients[i].password == mdp)
+		return (clients[i]);
+	}
+}
 
 app.get("/", function(req, res) {
-			res.render('index.ejs', {liste: clients, nbre: clients.length}); 
-	});
+			res.render('login.ejs', {}); 
+	})
+.post('/connecter', function(req, res) {
+    var client = checkLogin(req.body.login, req.body.mdp)
+	if (client) 
+	{
+		res.render('index.ejs', {client: client}); 
+    }
+    else res.redirect('/');
+})
 
 app.listen(5000);
