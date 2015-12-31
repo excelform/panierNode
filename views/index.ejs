@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title>Carnet d'adresses</title>
+    </head>
+    <body>
+        <h1>Carnet d'adresses</h1>
+		<h2>liste des utilisateurs</h2>
+		<table>
+			<thead>
+				<tr>
+				  <th>nom</th>
+				  <th>prenom</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%
+					for(var i = 0 ; i < nbre ; i++) {
+				%>
+					<tr>
+					  <td><%= liste[i].nom %></td>
+					  <td><%= liste[i].prenom %></td>
+					</tr>
+				<% } %>
+			</tbody>
+		</table>
+		<form id="form1" action="/ajouter" method="post">
+			<h2>Ajouter un utilisateur</h2>
+			<p><label> Nom: </label>
+			<input type="text" id="nom" name="nom"></input></p>
+			<p><label> prenom: </label>
+			<input type="text" id="prenom" name="prenom"></input></p>
+			<input type="submit" value="Ajouter"></input>
+		</form>
+		<form id="form2" action="/supprimer" method="post">
+			<h2>Supprimer un utilisateur</h2>
+			<p><label> Nom: </label>
+			<input type="text" id="nomSup" name="nomSup"></input></p>
+			<p><label> prenom: </label>
+			<input type="text" id="prenomSup" name="prenomSup"></input></p>
+			<input type="submit" value="Supprimer"></input>
+		</form>
+	</body>
+</html>
