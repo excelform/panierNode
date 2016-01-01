@@ -25,7 +25,7 @@ var clientSchema = new mongoose.Schema({
 });
 
 var ligneSchema = new mongoose.Schema({
-	prorietaire : String,
+	proprietaire : String,
 	code : String,
 	qte : Number,
 	prix : Number
@@ -69,11 +69,7 @@ var checkLogin = function(login, mdp)
 		return (clients[i]);
 	}
 }
-var chargerPanier = function(){
-	personnes.destroy({where: {nom: pers.nom, prenom: pers.prenom}}).then(function(arg){
-		console.log(arg);
-	});
-}
+
 app.get("/", function(req, res) {
 			res.render('login.ejs', {}); 
 	})
