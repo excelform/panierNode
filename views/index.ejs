@@ -6,6 +6,28 @@
         <h1>gestion du panier</h1>
 		<h2>bonjour <%= client.prenom %>  <%= client.nom %></h2> 
 		votre email : <%= client.email%>
+		
+		<h2>votre panier</h2>
+		<table>
+			<thead>
+				<tr>
+				  <th>code</th>
+				  <th>qte</th>
+				  <th>prix</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%
+					for(var i = 0 ; i < nbre ; i++) {
+				%>
+					<tr>
+					  <td><%= liste[i].code %></td>
+					  <td><%= liste[i].qte %></td>
+					  <td><%= liste[i].prix %></td>
+					</tr>
+				<% } %>
+			</tbody>
+		</table>
 
 		<form id="form1" action="/ajouter" method="post">
 			<h2>Ajouter un utilisateur</h2>
