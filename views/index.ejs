@@ -5,7 +5,7 @@
     <body>
         <h1>gestion du panier</h1>
 		<h2>bonjour <%= client.prenom %>  <%= client.nom %></h2> 
-		votre email : <%= client.email%>
+		<h3>votre email : <%= client.email%></h3>
 		
 		<h2>votre panier</h2>
 		<table>
@@ -28,7 +28,7 @@
 				<% } %>
 			</tbody>
 		</table>
-
+		<h3>Prix Total : <%= total%></h3>
 		<form id="form1" action="/ajouter" method="post">
 			<h2>Ajouter un utilisateur</h2>
 			<p><label> Nom: </label>

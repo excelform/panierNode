@@ -89,7 +89,10 @@ app.get("/", function(req, res) {
 	if (client) 
 	{
 		chargerPanier(req.body.login);
-		res.render('index.ejs', {client: client , liste : monPanier.liste , nbre : monPanier.liste.length}); 
+		res.render('index.ejs', {client: client,
+		liste : monPanier.liste,
+		nbre : monPanier.liste.length, 
+		total : monPanier.getPrixPanier()}); 
     }
     else res.redirect('/');
 });
