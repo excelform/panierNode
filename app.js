@@ -4,7 +4,6 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Panier = require('./panier');
-var Client = require('./client');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -36,23 +35,33 @@ var ligneSchema = new mongoose.Schema({
 var clientModel = mongoose.model('clients', clientSchema);
 var ligneModel = mongoose.model('lignes', ligneSchema);
 
-var monClient = new clientModel({ nom : 'rambo', prenom : 'john', email : 'john.rambo@boom.com', password : '123456' });
-var maLigne = new ligneModel({proprietaire : "john.rambo@boom.com", code : "1" , qte : 53 , prix : 9});
-monClient.save(function (err) {
-  if (err) throw err;
-  console.log('client ajouté avec succès !'); 
-});
-maLigne.save(function (err) {
-  if (err) throw err;
-  console.log('ligne panier ajouté avec succès !'); 
-});
-var monPanier;
+//var maLigne = new ligneModel({proprietaire : "marc.autran@datavalue.com", code : "5" , qte : 53 , prix : 9});
+
+// maLigne.save(function (err) {
+  // if (err) throw err;
+  // console.log('ligne panier ajouté avec succès !'); 
+// });
+
+var monPanier; 
+var lignes;
+
 ligneModel.find({}, function (err, liste) 
 {
 	if (err)  console.log(err);
-	monPanier = liste;
+	lignes = liste;
 });
 
+var chargerPanier = function(proprio)
+{
+	monPanier = new Panier();
+	var longueur = lignes.length;
+	for(var i = 0; i < longueur ; i++)
+	{
+		if(lignes[i].proprietaire == proprio)
+			monPanier.ajouterArticle(lignes[i].code, lignes[i].qte, lignes[i].prix);
+	}
+}
+	
 var clients;
 
 clientModel.find({}, function (err, liste) 
@@ -61,6 +70,8 @@ clientModel.find({}, function (err, liste)
 	clients = liste;
 	mongoose.connection.close();
 });
+
+
 var checkLogin = function(login, mdp)
 {
 	for (var i = 0; i < clients.length; i++) 
@@ -77,7 +88,8 @@ app.get("/", function(req, res) {
     var client = checkLogin(req.body.login, req.body.mdp)
 	if (client) 
 	{
-		res.render('index.ejs', {client: client , liste : monPanier , nbre : monPanier.length}); 
+		chargerPanier(req.body.login);
+		res.render('index.ejs', {client: client , liste : monPanier.liste , nbre : monPanier.liste.length}); 
     }
     else res.redirect('/');
 });
