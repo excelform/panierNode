@@ -76,8 +76,8 @@ var checkLogin = function(login, mdp)
 {
 	for (var i = 0; i < clients.length; i++) 
 	{
-    if (clients[i].email == login && clients[i].password == mdp)
-		return (clients[i]);
+		if (clients[i].email == login && clients[i].password == mdp)
+			return (clients[i]);
 	}
 }
 
@@ -95,13 +95,20 @@ app.get("/", function(req, res) {
 		total : monPanier.getPrixPanier()}); 
     }
     else res.redirect('/');
+})
+.post('/ajouter', function(req, res) {
+	if (req.body.code != '' && req.body.qte != ''&& req.body.prix != '') 
+	{ 
+		var client = new Object();
+		client.nom = req.body.nom; 
+		client.prenom = req.body.prenom;
+		client.email = req.body.email;
+		monPanier.ajouterArticle(req.body.code, parseInt(req.body.qte), parseInt(req.body.prix));
+		res.render('index.ejs', {client: client,
+		liste : monPanier.liste,
+		nbre : monPanier.liste.length, 
+		total : monPanier.getPrixPanier()}); 
+    }
+    else res.redirect('/');
 });
-// .post('/ajouter', function(req, res) {
-    // if (req.body.nom != '' && req.body.prenom != '') 
-	// {
-		// var pers = creerPersonne(req.body.prenom, req.body.nom);
-		// ajouterPersonne(pers);
-    // }
-    // res.redirect('/');
-
 app.listen(5000);
