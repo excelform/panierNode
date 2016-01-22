@@ -4,13 +4,18 @@
     </head>
     <body>
         <h1>Identifiez vous</h1>
-
-		<form id="form1" action="/connecter" method="post">
-			<p><label> Login: </label>
-			<input type="text" id="login" name="login"></input></p>
-			<p><label> mot de passe: </label>
-			<input type="text" id="mdp" name="mdp"></input></p>
-			<input type="submit" value="Connecter"></input>
+		<form id = "loginForm" action = "/connecter" method = "post">
+			<table>
+				<tr>
+					<td><label> Login: </label></td>
+					<td><input type = "text" id = "login" name = "login" /></td>
+				</tr>
+				<tr>
+					<td><label> Mot de passe: </label></td>
+					<td><input type = "text" id = "mdp" name = "mdp" /></td>
+				</tr>
+			</table>	
+			<input type = "submit" value = "Connecter" />
 		</form>
 	</body>
 </html>

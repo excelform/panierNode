@@ -6,31 +6,39 @@
         <h1>Mon panier</h1>
 		<h2> <%= client.prenom %>  <%= client.nom %></h2> 
 		<h3>Email : <%= client.email%></h3>
-		
-		
 		<h2>Contenu</h2>
 		<table>
 			<thead>
-				<tr>
-				  <th>code</th>
-				  <th>qte</th>
-				  <th>prix</th>
+				<tr>	
+					<th>code</th>
+					<th>qte</th>
+					<th>prix</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<%
 					for(var i = 0 ; i < nbre ; i++) {
 				%>
-					<tr>
-					  <td><%= liste[i].codeArticle %></td>
-					  <td><%= liste[i].qteArticle %></td>
-					  <td><%= liste[i].prixArticle %></td>
-					</tr>
+				<tr>
+					<td><%= liste[i].codeArticle %></td>
+					<td><%= liste[i].qteArticle %></td>
+					<td><%= liste[i].prixArticle %></td>
+					<td>
+						<form id="supprimer" action="/supprimer" method = "post">
+							<input type = "submit" value = "retirer"/>
+							<input type = "text" name = "ident" hidden value = <%= liste[i].codeArticle %> /> 
+							<input type = "text" name = "prenom" hidden value = <%= client.prenom %> />
+							<input type = "text" name = "nom" hidden value = <%= client.nom %> />
+							<input type = "text" name = "email" hidden value = <%= client.email %> />
+						</form>
+					</td>
+				</tr>
 				<% } %>
 			</tbody>
 		</table>
 		<h3>Prix Total : <%= total%></h3>
-		<form id="form1" action="/ajouter" method = "post">
+		<form id="ajouter" action="/ajouter" method = "post">
 			<h2>Ajouter un article</h2>
 			<p><label> Code: </label>
 			<input type = "text" id = "code" name = "code"/></p>
@@ -38,9 +46,9 @@
 			<input type = "number" id = "qte" name = "qte"/></p>
 			<p><label> Prix: </label>
 			<input type = "number" id = "prix" name = "prix"/></p>
-			<input type = "text" id = "prenom" name = "prenom" value = <%= client.prenom %> hidden />
-			<input type = "text" id = "nom" name = "nom" value = <%= client.nom %>  hidden />
-			<input type = "text" id = "email" name = "email" value = <%= client.email %> hidden />
+			<input type = "text" id = "prenom" name = "prenom" hidden value = <%= client.prenom %> />
+			<input type = "text" id = "nom" name = "nom" hidden value = <%= client.nom %> />
+			<input type = "text" id = "email" name = "email" hidden value = <%= client.email %> />
 			<input type = "submit" value = "Ajouter"/>
 		</form>
 	</body>

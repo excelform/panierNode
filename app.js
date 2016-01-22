@@ -110,5 +110,20 @@ app.get("/", function(req, res) {
 		total : monPanier.getPrixPanier()}); 
     }
     else res.redirect('/');
+})
+.post('/supprimer', function(req, res) {
+	if (req.body.ident != '') 
+	{ 
+		var client = new Object();
+		client.nom = req.body.nom; 
+		client.prenom = req.body.prenom;
+		client.email = req.body.email;
+		monPanier.supprimerArticle(req.body.ident);
+		res.render('index.ejs', {client: client,
+		liste : monPanier.liste,
+		nbre : monPanier.liste.length, 
+		total : monPanier.getPrixPanier()}); 
+    }
+    else res.redirect('/');
 });
 app.listen(5000);
