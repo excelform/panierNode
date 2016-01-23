@@ -26,7 +26,7 @@
 					<td><%= liste[i].prixArticle %></td>
 					<td>
 						<form id="supprimer" action="/supprimer" method = "post">
-							<input type = "submit" value = "retirer"/>
+							<input type = "submit" value = "Retirer"/>
 							<input type = "text" name = "ident" hidden value = <%= liste[i].codeArticle %> /> 
 							<input type = "text" name = "prenom" hidden value = <%= client.prenom %> />
 							<input type = "text" name = "nom" hidden value = <%= client.nom %> />
@@ -40,16 +40,29 @@
 		<h3>Prix Total : <%= total%></h3>
 		<form id="ajouter" action="/ajouter" method = "post">
 			<h2>Ajouter un article</h2>
-			<p><label> Code: </label>
-			<input type = "text" id = "code" name = "code"/></p>
-			<p><label> Quantité: </label>
-			<input type = "number" id = "qte" name = "qte"/></p>
-			<p><label> Prix: </label>
-			<input type = "number" id = "prix" name = "prix"/></p>
+			<table>
+				<tr>
+					<td><label> Code: </label></td>
+					<td><input type = "text" id = "code" name = "code"/></td>
+				</tr>
+				<tr>
+					<td><label> Quantité: </label></td>
+					<td><input type = "number" id = "qte" name = "qte"/></td>
+				</tr>
+				<tr>
+					<td><label> Prix: </label></td>
+					<td><input type = "number" id = "prix" name = "prix"/></td>
+				</tr>
+			</table>
 			<input type = "text" id = "prenom" name = "prenom" hidden value = <%= client.prenom %> />
 			<input type = "text" id = "nom" name = "nom" hidden value = <%= client.nom %> />
 			<input type = "text" id = "email" name = "email" hidden value = <%= client.email %> />
-			<input type = "submit" value = "Ajouter"/>
+			<input type = "submit" value = "Ajouter"/>	
+		</form>
+			
+		<form id="sauvegarder" action="/sauvegarder" method = "post">
+			<input type = "text" id = "proprietaire" name = "proprietaire" hidden value = <%= client.email %> />
+			<input type = "submit" value = "Commander"/>
 		</form>
 	</body>
 </html>

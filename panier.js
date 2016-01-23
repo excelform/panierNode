@@ -21,6 +21,14 @@ class LignePanier
 	{
 		return this.codeArticle;
 	}
+	getQte()
+	{
+		return this.qteArticle;
+	}
+	getPrix()
+	{
+		return this.prixArticle;
+	}
 }
 module.exports = class Panier 
 { 

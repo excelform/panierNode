@@ -35,13 +35,6 @@ var ligneSchema = new mongoose.Schema({
 var clientModel = mongoose.model('clients', clientSchema);
 var ligneModel = mongoose.model('lignes', ligneSchema);
 
-//var maLigne = new ligneModel({proprietaire : "marc.autran@datavalue.com", code : "5" , qte : 53 , prix : 9});
-
-// maLigne.save(function (err) {
-  // if (err) throw err;
-  // console.log('ligne panier ajouté avec succès !'); 
-// });
-
 var monPanier; 
 var lignes;
 
@@ -68,7 +61,7 @@ clientModel.find({}, function (err, liste)
 {
 	if (err)  console.log(err);
 	clients = liste;
-	mongoose.connection.close();
+	
 });
 
 
@@ -125,5 +118,27 @@ app.get("/", function(req, res) {
 		total : monPanier.getPrixPanier()}); 
     }
     else res.redirect('/');
+})
+.post('/sauvegarder', function(req, res) {
+	if (req.body.proprietaire != '') 
+	{ 
+		ligneModel.remove({ proprietaire : req.body.proprietaire }, function (err) {
+			if (err) { throw err; }
+			console.log("lignes détruites");
+			var maLigne;
+			var longueur = monPanier.liste.length;
+			for (var i = 0; i < longueur; i++)
+			{
+				maLigne = new ligneModel({proprietaire : req.body.proprietaire, code : monPanier.liste[i].getCode() , qte : parseInt(monPanier.liste[i].getQte()) , prix : parseInt(monPanier.liste[i].getPrix())});
+				maLigne.save(function (err) {
+					if (err) throw err;
+					console.log('ligne panier ajouté avec succès !');
+				});
+			}
+			res.redirect('/');
+			});
+    }
+    else res.redirect('/');
 });
+//mongoose.connection.close();
 app.listen(5000);
